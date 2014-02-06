@@ -1,2 +1,5 @@
 agent/target
 manager/target
+**/.classpath
+**/.project
+**/.settings
