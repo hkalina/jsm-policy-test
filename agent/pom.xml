@@ -59,6 +59,18 @@
 				<version>7.5.Final</version>
 			</plugin>
 			
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-war-plugin</artifactId>
+			    <configuration>
+			        <archive>
+			            <manifestEntries>
+			                <Dependencies>sun.jdk</Dependencies>
+			            </manifestEntries>  
+			        </archive>
+			    </configuration>
+			</plugin>
+			
 		</plugins>
 	</build>
 
