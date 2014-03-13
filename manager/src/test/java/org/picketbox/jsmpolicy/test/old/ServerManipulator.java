@@ -1,4 +1,4 @@
-package org.picketbox.jsmpolicy.test;
+package org.picketbox.jsmpolicy.test.old;
 
 import java.io.IOException;
 import java.util.HashMap;
