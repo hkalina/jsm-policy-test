@@ -68,17 +68,21 @@ public class Domain {
         ModelNode operation = new ModelNode();
         operation.get(ClientConstants.OP).set(ClientConstants.ADD);
         subsystem(operation.get(ClientConstants.OP_ADDR)).add("server", server);
-        operation.get("policy").set(policy);
+        if(policy!=null) operation.get("policy").set(policy);
         String result = mcc.execute(operation).get(ClientConstants.OUTCOME).asString();
         return result.equals(ClientConstants.SUCCESS);
     }
 
     public boolean updateServer(String server, String policy) throws IOException {
         ModelNode operation = new ModelNode();
-        operation.get(ClientConstants.OP).set(ClientConstants.WRITE_ATTRIBUTE_OPERATION);
         subsystem(operation.get(ClientConstants.OP_ADDR)).add("server", server);
         operation.get(ClientConstants.NAME).set("policy");
-        operation.get(ClientConstants.VALUE).set(policy);
+        if(policy==null){
+            operation.get(ClientConstants.OP).set(ClientConstants.UNDEFINE_ATTRIBUTE_OPERATION);
+        }else{
+            operation.get(ClientConstants.OP).set(ClientConstants.WRITE_ATTRIBUTE_OPERATION);
+            operation.get(ClientConstants.VALUE).set(policy);
+        }
         String result = mcc.execute(operation).get(ClientConstants.OUTCOME).asString();
         return result.equals(ClientConstants.SUCCESS);
     }
@@ -93,6 +97,25 @@ public class Domain {
         return addOrUpdatePolicy(policy, file) && addOrUpdateServer(server, policy);
     }
 
+    public boolean removeSubsystem() throws IOException {
+        ModelNode operation = new ModelNode();
+        operation.get(ClientConstants.OP).set(ClientConstants.REMOVE_OPERATION);
+        subsystem(operation.get(ClientConstants.OP_ADDR));
+        String result = mcc.execute(operation).get(ClientConstants.OUTCOME).asString();
+        return result.equals(ClientConstants.SUCCESS);
+    }
 
+    public boolean addSubsystem() throws IOException {
+        ModelNode operation = new ModelNode();
+        operation.get(ClientConstants.OP).set(ClientConstants.ADD);
+        subsystem(operation.get(ClientConstants.OP_ADDR));
+        String result = mcc.execute(operation).get(ClientConstants.OUTCOME).asString();
+        return result.equals(ClientConstants.SUCCESS);
+    }
+
+    public boolean restartSubsystem() throws IOException {
+        removeSubsystem();
+        return addSubsystem();
+    }
 
 }

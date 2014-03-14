@@ -45,6 +45,7 @@ public class SystemTestCase {
     @Before
     public void before() throws Exception {
         d = new Domain("localhost", 9999, "full");
+        d.restartSubsystem();
         d.addOrUpdatePolicy("policyMinimal", policyMinimal);
         d.addOrUpdatePolicy("policyAllowingTestingFile1", policyAllowingTestingFile1);
         d.addOrUpdatePolicy("policyAllowingTestingFile2", policyAllowingTestingFile2);
@@ -52,10 +53,55 @@ public class SystemTestCase {
     }
 
     @Test
-    public void testInitialConditions() throws Exception {
+    public void testAccessiblityOfServer() throws Exception {
         assertTrue(s1.isAccessible());
+    }
+
+    @Test
+    public void testInitialConditions() throws Exception {
+        assertTrue(s1.isReadable(testingFile1.getAbsolutePath()));
+        assertTrue(s1.isReadable(testingFile2.getAbsolutePath()));
+    }
+
+    @Test
+    public void testUndefinedPolicy() throws Exception {
+        d.addOrUpdateServer("server-one", null);
+        assertTrue(s1.isReadable(testingFile1.getAbsolutePath()));
+        assertTrue(s1.isReadable(testingFile2.getAbsolutePath()));
+    }
+
+    @Test
+    public void testMinimalPolicy() throws Exception {
+        d.addOrUpdateServer("server-one", "policyMinimal");
         assertFalse(s1.isReadable(testingFile1.getAbsolutePath()));
         assertFalse(s1.isReadable(testingFile2.getAbsolutePath()));
+    }
+
+    @Test
+    public void testPolicyAllowingTestingFile1() throws Exception {
+        d.addOrUpdateServer("server-one", "policyAllowingTestingFile1");
+        assertTrue(s1.isReadable(testingFile1.getAbsolutePath()));
+        assertFalse(s1.isReadable(testingFile2.getAbsolutePath()));
+    }
+
+    @Test
+    public void testPolicyAllowingTestingFile2() throws Exception {
+        d.addOrUpdateServer("server-one", "policyAllowingTestingFile2");
+        assertFalse(s1.isReadable(testingFile1.getAbsolutePath()));
+        assertTrue(s1.isReadable(testingFile2.getAbsolutePath()));
+    }
+
+    @Test
+    public void testSwitch1to2() throws Exception {
+
+        d.addOrUpdateServer("server-one", "policyAllowingTestingFile1");
+        assertTrue(s1.isReadable(testingFile1.getAbsolutePath()));
+        assertFalse(s1.isReadable(testingFile2.getAbsolutePath()));
+
+        d.addOrUpdateServer("server-one", "policyAllowingTestingFile2");
+        assertFalse(s1.isReadable(testingFile1.getAbsolutePath()));
+        assertTrue(s1.isReadable(testingFile2.getAbsolutePath()));
+
     }
 
     @After
