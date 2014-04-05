@@ -18,6 +18,7 @@ public class SystemTestCase {
 
     private File testingFile1 = new File("/etc/passwd");
     private File testingFile2 = new File("/etc/group");
+    private String server1 = "jk-xubuntu";
 
     // Permission which PolicyManager has to have for switching
     private String requiredPermissions =
@@ -44,6 +45,7 @@ public class SystemTestCase {
 
     @Before
     public void before() throws Exception {
+        Thread.sleep(1000);
         d = new Domain("localhost", 9999, "full");
         d.restartSubsystem();
         d.addOrUpdatePolicy("policyMinimal", policyMinimal);
@@ -65,28 +67,32 @@ public class SystemTestCase {
 
     @Test
     public void testUndefinedPolicy() throws Exception {
-        d.addOrUpdateServer("server-one", null);
+        d.addOrUpdateServer(server1, null);
+        Thread.sleep(1000);
         assertTrue(s1.isReadable(testingFile1.getAbsolutePath()));
         assertTrue(s1.isReadable(testingFile2.getAbsolutePath()));
     }
 
     @Test
     public void testMinimalPolicy() throws Exception {
-        d.addOrUpdateServer("server-one", "policyMinimal");
+        d.addOrUpdateServer(server1, "policyMinimal");
+        Thread.sleep(1000);
         assertFalse(s1.isReadable(testingFile1.getAbsolutePath()));
         assertFalse(s1.isReadable(testingFile2.getAbsolutePath()));
     }
 
     @Test
     public void testPolicyAllowingTestingFile1() throws Exception {
-        d.addOrUpdateServer("server-one", "policyAllowingTestingFile1");
+        d.addOrUpdateServer(server1, "policyAllowingTestingFile1");
+        Thread.sleep(1000);
         assertTrue(s1.isReadable(testingFile1.getAbsolutePath()));
         assertFalse(s1.isReadable(testingFile2.getAbsolutePath()));
     }
 
     @Test
     public void testPolicyAllowingTestingFile2() throws Exception {
-        d.addOrUpdateServer("server-one", "policyAllowingTestingFile2");
+        d.addOrUpdateServer(server1, "policyAllowingTestingFile2");
+        Thread.sleep(1000);
         assertFalse(s1.isReadable(testingFile1.getAbsolutePath()));
         assertTrue(s1.isReadable(testingFile2.getAbsolutePath()));
     }
@@ -94,11 +100,13 @@ public class SystemTestCase {
     @Test
     public void testSwitch1to2() throws Exception {
 
-        d.addOrUpdateServer("server-one", "policyAllowingTestingFile1");
+        d.addOrUpdateServer(server1, "policyAllowingTestingFile1");
+        Thread.sleep(1000);
         assertTrue(s1.isReadable(testingFile1.getAbsolutePath()));
         assertFalse(s1.isReadable(testingFile2.getAbsolutePath()));
 
-        d.addOrUpdateServer("server-one", "policyAllowingTestingFile2");
+        d.addOrUpdateServer(server1, "policyAllowingTestingFile2");
+        Thread.sleep(1000);
         assertFalse(s1.isReadable(testingFile1.getAbsolutePath()));
         assertTrue(s1.isReadable(testingFile2.getAbsolutePath()));
 

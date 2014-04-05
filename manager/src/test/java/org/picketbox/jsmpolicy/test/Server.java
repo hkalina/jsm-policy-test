@@ -1,7 +1,5 @@
 package org.picketbox.jsmpolicy.test;
 
-import java.io.IOException;
-
 import javax.ws.rs.core.MultivaluedMap;
 
 import com.sun.jersey.api.client.Client;
@@ -13,11 +11,11 @@ public class Server {
     Client client = Client.create(); // REST client
     String url;
 
-    public Server(String url) throws IOException {
+    public Server(String url) {
         this.url = url;
     }
 
-    public void destroy() throws IOException {
+    public void destroy() {
         client.destroy();
     }
 

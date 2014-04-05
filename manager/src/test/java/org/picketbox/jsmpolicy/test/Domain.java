@@ -1,14 +1,9 @@
 package org.picketbox.jsmpolicy.test;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
-
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
-import org.jboss.dmr.ModelType;
-
-import com.sun.jersey.api.client.Client;
 
 public class Domain {
 
