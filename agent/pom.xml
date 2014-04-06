@@ -7,14 +7,14 @@
 	<packaging>war</packaging>
 	<name>JSM Policy Testing Agent</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<parent>
 		<groupId>org.picketbox.jsmpolicy</groupId>
 		<artifactId>JsmPolicyTest</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	
+
 	<repositories>
 		<repository>
 			<id>JBoss repository</id>
@@ -38,12 +38,19 @@
 			<scope>provided</scope><!-- require for JBoss AS7 and newer -->
 		</dependency>
 
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<finalName>JsmPolicyTestingAgent</finalName>
 		<plugins>
-			
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -52,25 +59,40 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.jboss.as.plugins</groupId>
 				<artifactId>jboss-as-maven-plugin</artifactId>
 				<version>7.5.Final</version>
 			</plugin>
-			
+
 			<plugin>
-			    <groupId>org.apache.maven.plugins</groupId>
-			    <artifactId>maven-war-plugin</artifactId>
-			    <configuration>
-			        <archive>
-			            <manifestEntries>
-			                <Dependencies>sun.jdk</Dependencies>
-			            </manifestEntries>  
-			        </archive>
-			    </configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Dependencies>sun.jdk</Dependencies>
+						</manifestEntries>
+					</archive>
+				</configuration>
 			</plugin>
-			
+
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.4.Final</version>
+				<configuration>
+					<force>true</force>
+					<hostname>localhost</hostname>
+					<username>admin</username>
+					<password>admin</password>
+					<fileNames>
+						<fileName>target/JsmPolicyTestingAgent.war</fileName>
+					</fileNames>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

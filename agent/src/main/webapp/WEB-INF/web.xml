@@ -30,4 +30,14 @@
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>root-servlet</servlet-name>
+		<servlet-class>org.picketbox.jsmpolicy.test.RootServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>root-servlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
