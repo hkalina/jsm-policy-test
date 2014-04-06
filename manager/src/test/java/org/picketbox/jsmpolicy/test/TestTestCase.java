@@ -32,7 +32,7 @@ public class TestTestCase {
 
     @Test
     public void testNameEqualityServer1() throws Exception {
-        assertTrue(Constants.server1.equals(s1.getServer()));
+        assertEquals(Constants.server1, s1.getServer());
     }
 
     @After

@@ -55,13 +55,13 @@ public class RootServlet extends HttpServlet {
         try{
             Policy p = Policy.getPolicy();
             if(p == null){
-                return row("Policy class", "null", "#F88");
+                return row("Policy class", "null", "#FF8");
             }else{
                 return row("Policy class", p.getClass().getName(), "#8F8");
             }
         }
         catch(Exception e){
-            return row("Policy class", e.toString(), "#FF8");
+            return row("Policy class", e.toString(), "#F88");
         }
     }
 
