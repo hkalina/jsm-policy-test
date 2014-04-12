@@ -3,11 +3,17 @@ package org.picketbox.jsmpolicy.test;
 public class Constants {
 
     static String jBossServer = "localhost";
-    static int jBossPort = 9999;
+    static String jBossProtocol = "http-remoting";
+    static int jBossPort = 9990;
     static String jBossProfile = "full";
+
+    static long switchingTime = 2000; // delay after change of policy because server reload
 
     static String server1 = "server-one";
     static String url1 = "http://localhost:8080/JsmPolicyTestingAgent/";
+
+    static String server2 = "server-two";
+    static String url2 = "http://localhost:8230/JsmPolicyTestingAgent/";
 
     static String testingFile1 = "/etc/passwd";
     static String testingFile2 = "/etc/group";

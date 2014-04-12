@@ -35,7 +35,7 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>2.2.1.GA</version>
-			<scope>provided</scope><!-- require for JBoss AS7 and newer -->
+			<scope>provided</scope><!-- required for JBoss AS7 and newer -->
 		</dependency>
 
 		<dependency>
@@ -61,12 +61,6 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.5.Final</version>
-			</plugin>
-
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
@@ -78,19 +72,26 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>7.4.Final</version>
+			<plugin><!-- to deploy use command: mvn wildfly:deploy -->
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.0.1.Final</version>
 				<configuration>
-					<force>true</force>
+					<force>true</force><!-- rewrite if already deployed -->
 					<hostname>localhost</hostname>
 					<username>admin</username>
 					<password>admin</password>
 					<fileNames>
 						<fileName>target/JsmPolicyTestingAgent.war</fileName>
 					</fileNames>
+					
+					<domain>
+						<server-groups>
+							<server-group>main-server-group</server-group>
+						</server-groups>
+					</domain>
 				</configuration>
+				
 			</plugin>
 
 		</plugins>

@@ -11,8 +11,8 @@ public class Domain {
     String profile;
     boolean domain;
 
-    public Domain(String hostname, int port, String profile) throws IOException {
-        mcc = ModelControllerClient.Factory.create(hostname, port);
+    public Domain(String protocol, String hostname, int port, String profile) throws IOException {
+        mcc = ModelControllerClient.Factory.create(protocol, hostname, port);
         this.profile = profile;
         this.domain = isDomain();
     }

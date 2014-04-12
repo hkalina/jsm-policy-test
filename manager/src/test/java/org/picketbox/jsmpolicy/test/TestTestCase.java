@@ -1,6 +1,7 @@
 package org.picketbox.jsmpolicy.test;
 
 import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,16 +14,17 @@ import org.junit.Test;
 public class TestTestCase {
 
     Domain d;
-    Agent s1;
+    Agent s1, s2;
 
     @Before
     public void before() throws Exception {
-        d = new Domain("localhost", 9999, "full");
+        s1 = new Agent(Constants.url1);
+        s2 = new Agent(Constants.url2);
+        d = new Domain(Constants.jBossProtocol, Constants.jBossServer, Constants.jBossPort, Constants.jBossProfile);
         d.restartSubsystem();
         d.addOrUpdatePolicy("policyMinimal", Constants.policyMinimal);
         d.addOrUpdatePolicy("policyAllowingTestingFile1", Constants.policyAllowingTestingFile1);
         d.addOrUpdatePolicy("policyAllowingTestingFile2", Constants.policyAllowingTestingFile2);
-        s1 = new Agent(Constants.url1);
     }
 
     @Test
@@ -31,8 +33,18 @@ public class TestTestCase {
     }
 
     @Test
+    public void testAccessiblityOfServer2() throws Exception {
+        assertTrue(s2.isAccessible());
+    }
+
+    @Test
     public void testNameEqualityServer1() throws Exception {
         assertEquals(Constants.server1, s1.getServer());
+    }
+
+    @Test
+    public void testNameEqualityServer2() throws Exception {
+        assertEquals(Constants.server2, s2.getServer());
     }
 
     @After
