@@ -3,11 +3,13 @@ package org.picketbox.jsmpolicy.test;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.security.AccessControlException;
 import java.security.Policy;
+import java.security.ProtectionDomain;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +34,32 @@ public class RootServlet extends HttpServlet {
         out.println("<tr><td>&nbsp;</td></tr>");
         out.println(getReadableFileRow("/etc/passwd"));
         out.println(getReadableFileRow("/etc/group"));
+        out.println("<tr><td>&nbsp;</td></tr>");
+        out.println(getPermissionsFromPolicyRow());
+        out.println(getPermissionsFromProtectionDomainRow());
         out.println("</table>");
         out.println("</body>");
         out.println("</html>");
+    }
+
+    public String getPermissionsFromPolicyRow(){
+        try{
+            ProtectionDomain pd = this.getClass().getProtectionDomain();
+            return row("Policy.getPermissions", Policy.getPolicy().getPermissions(pd).toString(), "#CCC");
+        }
+        catch(Exception e){
+            return row("Policy.getPermissions", e.toString(), "#FF8");
+        }
+    }
+
+    public String getPermissionsFromProtectionDomainRow(){
+        try{
+            ProtectionDomain pd = this.getClass().getProtectionDomain();
+            return row("ProtectionDomain.getPermissions", pd.getPermissions().toString(), "#CCC");
+        }
+        catch(Exception e){
+            return row("ProtectionDomain.getPermissions", e.toString(), "#FF8");
+        }
     }
 
     public String getSecurityManagerRow(){

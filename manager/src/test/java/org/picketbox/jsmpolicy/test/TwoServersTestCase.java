@@ -34,7 +34,6 @@ public class TwoServersTestCase {
     public void testP1P2Policy() throws Exception {
         d.addOrUpdateServer(Constants.server1, "policyAllowingTestingFile1");
         d.addOrUpdateServer(Constants.server2, "policyAllowingTestingFile2");
-        Thread.sleep(Constants.switchingTime);
         assertTrue(s1.isReadable(Constants.testingFile1));
         assertFalse(s1.isReadable(Constants.testingFile2));
         assertFalse(s2.isReadable(Constants.testingFile1));
@@ -45,7 +44,6 @@ public class TwoServersTestCase {
     public void testSwitchP1P2toP2P1Policy() throws Exception {
         d.addOrUpdateServer(Constants.server1, "policyAllowingTestingFile1");
         d.addOrUpdateServer(Constants.server2, "policyAllowingTestingFile2");
-        Thread.sleep(Constants.switchingTime);
         assertTrue(s1.isReadable(Constants.testingFile1));
         assertFalse(s1.isReadable(Constants.testingFile2));
         assertFalse(s2.isReadable(Constants.testingFile1));
@@ -53,7 +51,6 @@ public class TwoServersTestCase {
 
         d.addOrUpdateServer(Constants.server1, "policyAllowingTestingFile2");
         d.addOrUpdateServer(Constants.server2, "policyAllowingTestingFile1");
-        Thread.sleep(Constants.switchingTime);
         assertFalse(s1.isReadable(Constants.testingFile1));
         assertTrue(s1.isReadable(Constants.testingFile2));
         assertTrue(s2.isReadable(Constants.testingFile1));

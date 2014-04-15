@@ -32,7 +32,6 @@ public class SwitchingSystemTestCase {
     @Test
     public void testUndefinedPolicy() throws Exception {
         d.addOrUpdateServer(Constants.server1, null);
-        Thread.sleep(Constants.switchingTime);
         assertTrue(s1.isReadable(Constants.testingFile1));
         assertTrue(s1.isReadable(Constants.testingFile2));
     }
@@ -40,7 +39,6 @@ public class SwitchingSystemTestCase {
     @Test
     public void testMinimalPolicy() throws Exception {
         d.addOrUpdateServer(Constants.server1, "policyMinimal");
-        Thread.sleep(Constants.switchingTime);
         assertFalse(s1.isReadable(Constants.testingFile1));
         assertFalse(s1.isReadable(Constants.testingFile2));
     }
@@ -48,7 +46,6 @@ public class SwitchingSystemTestCase {
     @Test
     public void testPolicyAllowingTestingFile1() throws Exception {
         d.addOrUpdateServer(Constants.server1, "policyAllowingTestingFile1");
-        Thread.sleep(Constants.switchingTime);
         assertTrue(s1.isReadable(Constants.testingFile1));
         assertFalse(s1.isReadable(Constants.testingFile2));
     }
@@ -56,7 +53,6 @@ public class SwitchingSystemTestCase {
     @Test
     public void testPolicyAllowingTestingFile2() throws Exception {
         d.addOrUpdateServer(Constants.server1, "policyAllowingTestingFile2");
-        Thread.sleep(Constants.switchingTime);
         assertFalse(s1.isReadable(Constants.testingFile1));
         assertTrue(s1.isReadable(Constants.testingFile2));
     }
@@ -64,7 +60,6 @@ public class SwitchingSystemTestCase {
     @Test
     public void testSafePolicyAllowingTestingFile1() throws Exception {
         d.addOrUpdateServer(Constants.server1, "safePolicyAllowingTestingFile1");
-        Thread.sleep(Constants.switchingTime);
         assertTrue(s1.isReadable(Constants.testingFile1));
         assertFalse(s1.isReadable(Constants.testingFile2));
     }
@@ -72,7 +67,6 @@ public class SwitchingSystemTestCase {
     @Test
     public void testSafePolicyAllowingTestingFile2() throws Exception {
         d.addOrUpdateServer(Constants.server1, "safePolicyAllowingTestingFile2");
-        Thread.sleep(Constants.switchingTime);
         assertFalse(s1.isReadable(Constants.testingFile1));
         assertTrue(s1.isReadable(Constants.testingFile2));
     }
@@ -81,12 +75,10 @@ public class SwitchingSystemTestCase {
     public void testSwitch1to2() throws Exception {
 
         d.addOrUpdateServer(Constants.server1, "policyAllowingTestingFile1");
-        Thread.sleep(Constants.switchingTime);
         assertTrue(s1.isReadable(Constants.testingFile1));
         assertFalse(s1.isReadable(Constants.testingFile2));
 
         d.addOrUpdateServer(Constants.server1, "policyAllowingTestingFile2");
-        Thread.sleep(Constants.switchingTime);
         assertFalse(s1.isReadable(Constants.testingFile1));
         assertTrue(s1.isReadable(Constants.testingFile2));
 
@@ -96,12 +88,10 @@ public class SwitchingSystemTestCase {
     public void testSwitchSafe1toSafe2() throws Exception {
 
         d.addOrUpdateServer(Constants.server1, "safePolicyAllowingTestingFile1");
-        Thread.sleep(Constants.switchingTime);
         assertTrue(s1.isReadable(Constants.testingFile1));
         assertFalse(s1.isReadable(Constants.testingFile2));
 
         d.addOrUpdateServer(Constants.server1, "safePolicyAllowingTestingFile2");
-        Thread.sleep(Constants.switchingTime);
         assertFalse(s1.isReadable(Constants.testingFile1));
         assertTrue(s1.isReadable(Constants.testingFile2));
 
