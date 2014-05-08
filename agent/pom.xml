@@ -80,19 +80,18 @@
 				<configuration>
 					<force>true</force><!-- rewrite if already deployed -->
 					<hostname>localhost</hostname>
-					<username>admin</username>
-					<password>admin</password>
+					<username>admin</username><!-- not required if localhost -->
+					<password>admin</password><!-- not required if localhost -->
 					<fileNames>
 						<fileName>target/JsmPolicyTestingAgent.war</fileName>
 					</fileNames>
-					
 					<domain>
 						<server-groups>
 							<server-group>main-server-group</server-group>
+							<!--<server-group>other-server-group</server-group>--><!-- cause FAILURE if STOPPED -->
 						</server-groups>
 					</domain>
 				</configuration>
-				
 			</plugin>
 
 		</plugins>
